@@ -19,7 +19,7 @@
         android:paddingStart="8dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:text="@string/level_hint"
+        android:hint="@string/level_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +27,7 @@
         />
 
     <Button
-        android:id="@+id/startChatButton"
+        android:id="@+id/startLevelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/primary_button_background"
@@ -42,4 +42,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lvlUrl"
         />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:backgroundTint="@color/colorPrimary"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startChatButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
