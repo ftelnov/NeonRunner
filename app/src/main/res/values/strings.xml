@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">AnonCh</string>
+    <string name="app_name">NeonRunner</string>
     <string name="start_game">Начать уровень</string>
-    <string name="level_hint">Pastebin уровня</string>
+    <string name="level_hint">Paste id</string>
+    <string name="connection_unstable">Подключение нестабильно</string>
 </resources>
