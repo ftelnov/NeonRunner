@@ -72,11 +72,11 @@ public class MainFragment extends Fragment {
                     StringBuilder sb = new StringBuilder();
                     String line;
                     while ((line = bufferedReader.readLine()) != null) {
-                        sb.append(line);
+                        sb.append(line).append('\n');
                     }
                     Intent intent = new Intent(activity, GameActivity.class);
                     intent.putExtra("level", sb.toString());
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                 } catch (IOException e) {
                     e.printStackTrace();
                     ((MainActivity) getActivity()).showPrimaryToast("Невозможно прочитать файл уровня");
