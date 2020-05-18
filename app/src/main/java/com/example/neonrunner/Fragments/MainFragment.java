@@ -1,6 +1,7 @@
 package com.example.neonrunner.Fragments;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -21,7 +22,12 @@ import com.example.neonrunner.R;
 import com.example.neonrunner.RetroShit.DataService;
 import com.example.neonrunner.RetroShit.RetroInstance;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -55,6 +61,31 @@ public class MainFragment extends Fragment {
         final ProgressBar loadingbar = view.findViewById(R.id.loadingBar);
         final EditText inputField = view.findViewById(R.id.lvlUrl);
         final MainActivity activity = (MainActivity) getActivity();
+        final Button startOriginalGame = view.findViewById(R.id.origGame);
+        startOriginalGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    InputStream inputStream  = getResources().openRawResource(R.raw.originals);
+                    InputStreamReader isr = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(isr);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                    Intent intent = new Intent(activity, GameActivity.class);
+                    intent.putExtra("level", sb.toString());
+                    startActivity(intent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ((MainActivity) getActivity()).showPrimaryToast("Невозможно прочитать файл уровня");
+                    return;
+                }
+
+
+            }
+        });
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,15 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.neonrunner.Fragments.MainFragment;
 import com.example.neonrunner.R;
 
-public class MainActivity extends AppCompatActivity {
-    public void showPrimaryToast(String text) {
-        Toast toast = Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG);
-        View view = toast.getView();
-        view.setBackground(getDrawable(R.drawable.toast_background));
-        TextView textview = view.findViewById(android.R.id.message);
-        textview.setTextColor(getColor(R.color.white));
-        toast.show();
-    }
+public class MainActivity extends NeonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

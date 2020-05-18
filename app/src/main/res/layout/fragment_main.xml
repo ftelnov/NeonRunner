@@ -8,6 +8,21 @@
     android:background="@drawable/start_background"
     tools:context=".Fragments.MainFragment">
 
+    <Button
+        android:id="@+id/origGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/primary_button_background"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="@string/start_original_game"
+        android:textAllCaps="true"
+        android:textAppearance="@style/ButtonText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startLevelButton" />
+
     <EditText
         android:id="@+id/lvlUrl"
         android:layout_width="match_parent"
@@ -44,25 +59,14 @@
         />
 
     <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:backgroundTint="@color/colorPrimary"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startChatButton" />
-
-    <ProgressBar
         android:id="@+id/loadingBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/lvlUrl"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startLevelButton" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

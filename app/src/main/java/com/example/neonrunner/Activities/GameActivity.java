@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import com.example.neonrunner.R;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends NeonActivity {
     String level_raw;
 
     @Override
@@ -21,5 +21,6 @@ public class GameActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
         level_raw = bundle.getString("level");
+        showPrimaryToast(level_raw);
     }
 }
