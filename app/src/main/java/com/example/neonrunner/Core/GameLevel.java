@@ -68,5 +68,6 @@ public class GameLevel {
                 object.update();
             }
         }
+        camera.syncWithAim();
     }
 }
