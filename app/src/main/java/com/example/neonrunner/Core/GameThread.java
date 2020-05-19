@@ -3,6 +3,7 @@ package com.example.neonrunner.Core;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
@@ -29,24 +30,18 @@ public class GameThread extends Thread {
                     this.gameSurface.draw(canvas);
                 }
             } catch (Exception e) {
+                // Do nothing.
             } finally {
                 if (canvas != null) {
+                    canvas.drawColor(Color.BLACK);
                     this.surfaceHolder.unlockCanvasAndPost(canvas);
                 }
             }
-            long now = System.nanoTime();
-            long waitTime = (now - startTime) / 1000000;
-            if (waitTime < 10) {
-                waitTime = 10; // Millisecond.
-            }
-
             try {
-                this.sleep(waitTime);
+                sleep(2);
             } catch (InterruptedException e) {
-
+                e.printStackTrace();
             }
-            startTime = System.nanoTime();
-            System.out.print(".");
         }
     }
 

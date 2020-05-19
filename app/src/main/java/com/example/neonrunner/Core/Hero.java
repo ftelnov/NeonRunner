@@ -33,6 +33,6 @@ public class Hero extends GameObject {
     @Override
     public void update() {
         super.update();
-        this.setPos_y(getPos_y() + 5);
+        this.setPos_x(getPos_x() + 1);
     }
 }
