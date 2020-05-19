@@ -10,10 +10,13 @@ import android.view.SurfaceView;
 
 import com.example.neonrunner.R;
 
+import java.util.ArrayList;
+
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread gameThread;
     private Hero hero;
+    private ArrayList<Block> blocks;
 
     public GameSurface(Context context) {
         super(context);

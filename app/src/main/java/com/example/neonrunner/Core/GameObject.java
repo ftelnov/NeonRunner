@@ -1,6 +1,7 @@
 package com.example.neonrunner.Core;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 public class GameObject {
     protected Bitmap image;
@@ -37,6 +38,10 @@ public class GameObject {
     protected Bitmap createSubImageAt(int row, int col) {
         Bitmap subImage = Bitmap.createBitmap(image, col * width, row * height, width, height);
         return subImage;
+    }
+
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(image, x, y, null);
     }
 
     public int getX() {
