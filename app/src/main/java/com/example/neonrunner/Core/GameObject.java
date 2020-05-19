@@ -9,30 +9,20 @@ public class GameObject {
     protected final int rowCount;
     protected final int colCount;
 
-    protected final int WIDTH;
-    protected final int HEIGHT;
-
     protected final int width;
-
-
     protected final int height;
-    protected int x;
-    protected int y;
+    private int pos_x;
+    private int pos_y;
 
-    public GameObject(Bitmap image, int rowCount, int colCount, int x, int y) {
+    public GameObject(Bitmap image, int rowCount, int colCount, int width, int height) {
 
         this.image = image;
         this.rowCount = rowCount;
         this.colCount = colCount;
-
-        this.x = x;
-        this.y = y;
-
-        this.WIDTH = image.getWidth();
-        this.HEIGHT = image.getHeight();
-
-        this.width = this.WIDTH / colCount;
-        this.height = this.HEIGHT / rowCount;
+        this.width = width;
+        this.height = height;
+        pos_y = rowCount * height;
+        pos_x = colCount * width;
     }
 
     protected Bitmap createSubImageAt(int row, int col) {
@@ -41,15 +31,15 @@ public class GameObject {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(image, x, y, null);
+        canvas.drawBitmap(image, pos_x, pos_y, null);
     }
 
     public int getX() {
-        return this.x;
+        return this.pos_x;
     }
 
     public int getY() {
-        return this.y;
+        return this.pos_y;
     }
 
 

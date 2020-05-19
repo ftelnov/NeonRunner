@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.example.neonrunner.Core.GameLevel;
 import com.example.neonrunner.Core.GameSurface;
 import com.example.neonrunner.R;
 
@@ -38,7 +39,8 @@ public class GameActivity extends NeonActivity {
                 temp_level.add(level);
             }
         }
-        GameSurface surface = new GameSurface(this);
+        GameLevel first = new GameLevel(game_levels.get(0), this);
+        GameSurface surface = new GameSurface(this, first);
 //        surface.setBackgroundResource(R.drawable.purple_sunset);
         this.setContentView(surface);
     }
