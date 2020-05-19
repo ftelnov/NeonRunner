@@ -1,6 +1,7 @@
 package com.example.neonrunner.Core;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 public class GameObject {
@@ -8,6 +9,8 @@ public class GameObject {
 
     protected final int rowCount;
     protected final int colCount;
+    int marginLeft = 500;
+    int marginTop = 500;
 
     protected final int width;
     protected final int height;
@@ -16,7 +19,7 @@ public class GameObject {
 
     public GameObject(Bitmap image, int rowCount, int colCount, int width, int height) {
 
-        this.image = image;
+        this.image = Bitmap.createScaledBitmap(image, width, height, false);
         this.rowCount = rowCount;
         this.colCount = colCount;
         this.width = width;
@@ -26,12 +29,12 @@ public class GameObject {
     }
 
     protected Bitmap createSubImageAt(int row, int col) {
-        Bitmap subImage = Bitmap.createBitmap(image, col * width, row * height, width, height);
+        Bitmap subImage = Bitmap.createBitmap(image, this.marginLeft + col * width, this.marginTop + row * height, width, height);
         return subImage;
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(image, pos_x, pos_y, null);
+        canvas.drawBitmap(image, this.marginLeft + pos_x, this.marginTop + pos_y, null);
     }
 
     public int getX() {

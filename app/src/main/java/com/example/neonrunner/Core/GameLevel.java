@@ -34,9 +34,9 @@ public class GameLevel {
 
             for (int i = 0; i < line.length(); ++i) {
                 if (arr[i] == '#') {
-                    temp_objects.add(new GameObject(block, level_index, i, 25, 25));
+                    temp_objects.add(new GameObject(block, level_index, i, 100, 100));
                 } else if (arr[i] == 'H') {
-                    temp_objects.add(new Hero(hero, level_index, i, 25, 25));
+                    temp_objects.add(new Hero(hero, level_index, i, 100, 100));
                 }
             }
             level.add(temp_objects);

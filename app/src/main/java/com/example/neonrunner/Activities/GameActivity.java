@@ -41,7 +41,7 @@ public class GameActivity extends NeonActivity {
         }
         GameLevel first = new GameLevel(game_levels.get(0), this);
         GameSurface surface = new GameSurface(this, first);
-//        surface.setBackgroundResource(R.drawable.purple_sunset);
+        surface.setBackgroundResource(R.drawable.purple_sunset);
         this.setContentView(surface);
     }
 }
