@@ -36,7 +36,10 @@ public class GameLevel {
                 if (arr[i] == '#') {
                     temp_objects.add(new GameObject(block, level_index, i, 100, 100));
                 } else if (arr[i] == 'H') {
-                    temp_objects.add(new Hero(hero, level_index, i, 100, 100));
+                    Hero _hero = new Hero(hero, level_index, i, 100, 100);
+                    _hero.setGameLevel(this);
+                    temp_objects.add(_hero);
+
                 }
             }
             level.add(temp_objects);
@@ -48,6 +51,14 @@ public class GameLevel {
         for (ArrayList<GameObject> level_line : level) {
             for (GameObject object : level_line) {
                 object.draw(canvas);
+            }
+        }
+    }
+
+    public void update() {
+        for (ArrayList<GameObject> level_line : level) {
+            for (GameObject object : level_line) {
+                object.update();
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.example.neonrunner.Core;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {

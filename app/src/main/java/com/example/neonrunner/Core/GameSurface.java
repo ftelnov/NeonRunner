@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,7 +25,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         level = levelt;
         // Make Game Surface focusable so it can handle events. .
         this.setFocusable(true);
-
         // Sét callback.
         this.getHolder().addCallback(this);
     }
@@ -45,7 +46,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-//        this.hero.update();
+        this.level.update();
     }
 
     @Override
