@@ -27,7 +27,7 @@ public class Hero extends GameObject {
     private GameLevel gameLevel;
 
     public Hero(Bitmap image, int rowCount, int colCount, int x, int y) {
-        super(image, rowCount, colCount, x, y);
+        super(image, rowCount, colCount, image.getWidth(), y);
     }
 
     @Override
