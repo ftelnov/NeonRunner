@@ -57,4 +57,9 @@ public class GameObject {
     public void update() {
 
     }
+
+    public void move(int offset_x, int offset_y) {
+        this.pos_x += offset_x;
+        this.pos_y += offset_y;
+    }
 }

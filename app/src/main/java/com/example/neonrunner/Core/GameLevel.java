@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameLevel {
+    Integer display_height;
+    Integer display_width;
+    BoundedCamera camera;
+
     public ArrayList<ArrayList<GameObject>> getLevel() {
         return level;
     }
@@ -28,6 +32,8 @@ public class GameLevel {
         int level_index = 0;
         Bitmap block = BitmapFactory.decodeResource(activity.getResources(), R.drawable.block_main);
         Bitmap hero = BitmapFactory.decodeResource(activity.getResources(), R.drawable.hero_stays_right);
+        display_height = activity.getResources().getDisplayMetrics().heightPixels;
+        display_width = activity.getResources().getDisplayMetrics().widthPixels;
         for (String line : raw_level) {
             char[] arr = line.toCharArray();
             ArrayList<GameObject> temp_objects = new ArrayList<>();
@@ -38,6 +44,7 @@ public class GameLevel {
                 } else if (arr[i] == 'H') {
                     Hero _hero = new Hero(hero, level_index, i, 100, 100);
                     _hero.setGameLevel(this);
+                    camera = new BoundedCamera(_hero, this);
                     temp_objects.add(_hero);
 
                 }
@@ -45,6 +52,7 @@ public class GameLevel {
             level.add(temp_objects);
             level_index++;
         }
+        camera.syncWithAim();
     }
 
     public void draw(Canvas canvas) {

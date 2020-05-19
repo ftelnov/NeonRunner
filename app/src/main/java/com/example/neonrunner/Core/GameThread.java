@@ -22,21 +22,7 @@ public class GameThread extends Thread {
         long startTime = System.nanoTime();
 
         while (running) {
-            Canvas canvas = null;
-            try {
-                canvas = this.surfaceHolder.lockCanvas();
-                synchronized (canvas) {
-                    this.gameSurface.update();
-                    this.gameSurface.draw(canvas);
-                }
-            } catch (Exception e) {
-                // Do nothing.
-            } finally {
-                if (canvas != null) {
-                    canvas.drawColor(Color.BLACK);
-                    this.surfaceHolder.unlockCanvasAndPost(canvas);
-                }
-            }
+            gameSurface.update();
             try {
                 sleep(2);
             } catch (InterruptedException e) {

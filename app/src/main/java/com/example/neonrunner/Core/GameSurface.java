@@ -47,7 +47,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+        invalidate();
+        Canvas canvas = getHolder().lockCanvas(null);
+        this.draw(canvas);
         this.level.update();
+        getHolder().unlockCanvasAndPost(canvas);
     }
 
     @Override
@@ -59,6 +63,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        setWillNotDraw(false);
         this.gameThread = new GameThread(this, holder);
         this.gameThread.setRunning(true);
         this.gameThread.start();
