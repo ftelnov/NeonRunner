@@ -46,7 +46,6 @@ public class GameLevel {
                     _hero.setGameLevel(this);
                     camera = new BoundedCamera(_hero, this);
                     temp_objects.add(_hero);
-
                 }
             }
             level.add(temp_objects);

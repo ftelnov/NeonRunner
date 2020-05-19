@@ -1,5 +1,7 @@
 package com.example.neonrunner.Core;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class BoundedCamera {
@@ -21,8 +23,8 @@ public class BoundedCamera {
 
     public void syncWithAim() {
         int offset_x, offset_y;
-        offset_x = aim.getPos_x() - level.display_width / 2;
-        offset_y = aim.getPos_y() - level.display_height / 2;
+        offset_x = level.display_width / 2 - aim.getAbs_x();
+        offset_y = level.display_height / 2 - aim.getAbs_y();
         for (ArrayList<GameObject> level_line : level.getLevel()) {
             for (GameObject object : level_line) {
                 object.move(offset_x, offset_y);

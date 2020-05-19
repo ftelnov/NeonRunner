@@ -15,6 +15,25 @@ public class GameObject {
     protected final int width;
     protected final int height;
 
+    public Integer getAbs_x() {
+        return abs_x;
+    }
+
+    public void setAbs_x(Integer abs_x) {
+        this.abs_x = abs_x;
+    }
+
+    public Integer getAbs_y() {
+        return abs_y;
+    }
+
+    public void setAbs_y(Integer abs_y) {
+        this.abs_y = abs_y;
+    }
+
+    private Integer abs_x;
+    private Integer abs_y;
+
     public int getPos_x() {
         return pos_x;
     }
@@ -43,6 +62,8 @@ public class GameObject {
         this.height = height;
         pos_y = rowCount * height;
         pos_x = colCount * width;
+        abs_x = pos_x + this.marginLeft;
+        abs_y = pos_y + this.marginTop;
     }
 
     protected Bitmap createSubImageAt(int row, int col) {
@@ -51,7 +72,7 @@ public class GameObject {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(image, this.marginLeft + pos_x, this.marginTop + pos_y, null);
+        canvas.drawBitmap(image, abs_x, abs_y, null);
     }
 
     public void update() {
@@ -59,7 +80,7 @@ public class GameObject {
     }
 
     public void move(int offset_x, int offset_y) {
-        this.pos_x += offset_x;
-        this.pos_y += offset_y;
+        this.abs_x += offset_x;
+        this.abs_y += offset_y;
     }
 }
