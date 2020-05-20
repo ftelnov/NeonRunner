@@ -96,6 +96,13 @@ public class Hero extends GameObject {
         super(image, rowCount, colCount, image.getWidth(), y); // Создаем как обычный игровой объект, но без скалирования по ширине, чтобы не сжимать
     }
 
+    Boolean checkIntersectionWithUntranparents() {
+        for (GameObject object : nTransparents) {
+            if (checkIntersection(object)) return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
     @Override
     public void update() {
         super.update();
@@ -105,11 +112,9 @@ public class Hero extends GameObject {
         }
         onEarth = false;
         this.setAbs_y(getAbs_y() + fallingSpeed);
-        for (GameObject object : nTransparents) {
-            if (checkIntersection(object)) {
-                onEarth = true;
-                this.setAbs_y(getAbs_y() - fallingSpeed);
-            }
+        if (checkIntersectionWithUntranparents()) {
+            onEarth = true;
+            this.setAbs_y(getAbs_y() - fallingSpeed);
         }
         if (running_phase.equals(RUN_RIGHT)) {
             // Последовательная смена форм из массива
@@ -119,11 +124,9 @@ public class Hero extends GameObject {
                 form_right_switcher = 0; // обнуляем, если перешло границу массива
             }
             setAbs_x(getAbs_x() + ABS_MOVING_SPEED); // Прибавляем координату
-            for (GameObject object : nTransparents) {
+            if (checkIntersectionWithUntranparents()) {
                 // Перебираем массив объектов, если находим пересечение - удаляем изменения путем откатывания
-                if (checkIntersection(object)) {
-                    setAbs_x(getAbs_x() - ABS_MOVING_SPEED);
-                }
+                setAbs_x(getAbs_x() - ABS_MOVING_SPEED);
             }
         } else if (running_phase.equals(RUN_LEFT)) { // Аналогично и с хождением влево
             // Последовательная смена форм из массива
@@ -133,19 +136,16 @@ public class Hero extends GameObject {
                 form_left_switcher = 0; // обнуляем, если перешло границу массива
             }
             setAbs_x(getAbs_x() - ABS_MOVING_SPEED);
-            for (GameObject object : nTransparents) {
-                if (checkIntersection(object)) {
-                    setAbs_x(getAbs_x() + ABS_MOVING_SPEED);
-                }
+            if (checkIntersectionWithUntranparents()) {
+                setAbs_x(getAbs_x() + ABS_MOVING_SPEED);
             }
         }
         if (jumpHeight > 0) {
             jumpHeight -= ABS_JUMP_SPEED;
             this.setAbs_y(getAbs_y() - ABS_JUMP_SPEED);
-            for (GameObject object : nTransparents) {
-                if (checkIntersection(object)) {
-                    this.setAbs_y(getAbs_y() + ABS_JUMP_SPEED);
-                }
+            if (checkIntersectionWithUntranparents()) {
+                this.setAbs_y(getAbs_y() + ABS_JUMP_SPEED);
+                jumpHeight = 0;
             }
         }
     }
