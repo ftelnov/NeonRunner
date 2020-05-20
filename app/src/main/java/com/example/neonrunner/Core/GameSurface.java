@@ -28,18 +28,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            int x = (int) event.getX();
-//            int y = (int) event.getY();
-//
-//            int movingVectorX = x - this.hero.getX();
-//            int movingVectorY = y - this.hero.getY();
-//
-//            this.hero.setMovingVector(movingVectorX, movingVectorY);
-//            return true;
-//        }
-//        return false;
-        return false;
+        level.main_hero.touchAppears(event);
+        return true;
     }
 
     public void update() {

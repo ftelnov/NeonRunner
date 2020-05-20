@@ -17,6 +17,7 @@ public class GameLevel {
     Integer display_height;
     Integer display_width;
     BoundedCamera camera;
+    Hero main_hero;
 
     public ArrayList<ArrayList<GameObject>> getLevel() {
         return level;
@@ -45,6 +46,7 @@ public class GameLevel {
                     Hero _hero = new Hero(hero, level_index, i, 100, 100);
                     _hero.setGameLevel(this);
                     camera = new BoundedCamera(_hero, this);
+                    main_hero = _hero;
                     temp_objects.add(_hero);
                 }
             }
