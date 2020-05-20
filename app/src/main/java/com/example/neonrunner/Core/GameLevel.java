@@ -18,6 +18,7 @@ public class GameLevel {
     Integer display_width;
     BoundedCamera camera;
     Hero main_hero;
+    NeonActivity activity;
 
     public ArrayList<ArrayList<GameObject>> getLevel() {
         return level;
@@ -31,6 +32,7 @@ public class GameLevel {
 
     public GameLevel(ArrayList<String> raw_level, NeonActivity activity) {
         int level_index = 0;
+        this.activity = activity;
         Bitmap block = BitmapFactory.decodeResource(activity.getResources(), R.drawable.block_main);
         Bitmap hero = BitmapFactory.decodeResource(activity.getResources(), R.drawable.hero_stays_right);
         display_height = activity.getResources().getDisplayMetrics().heightPixels;

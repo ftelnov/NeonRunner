@@ -6,8 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class GameObject {
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
     private Bitmap image;
-    Integer fallingSpeed = 10;
+    Integer fallingSpeed = 30;
 
     private final int rowCount;
     private final int colCount;
@@ -25,6 +33,14 @@ public class GameObject {
 
     boolean checkIntersection(GameObject object) {
         return this.getRect().intersect(object.getRect());
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     private final int width;
