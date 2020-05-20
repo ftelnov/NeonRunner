@@ -42,7 +42,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         // Если персонаж умер, пересоздаем игру
         gameThread.setRunning(false);
         gameThread.interrupt();
-        context.runFinnishScreen(); // вызываем финальный экран
+        context.runDeadScreen(); // вызываем финальный экран
     }
 
     private GameLevel level; // текущий лвл игры

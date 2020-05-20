@@ -57,4 +57,11 @@ public class GameActivity extends NeonActivity {
         Intent intent = new Intent(this, FinishGameActivity.class);
         this.startActivity(intent); // запускаем его
     }
+
+    // Метод, вызываем в полотне для запуска смертельной концовки
+    public void runDeadScreen() {
+        // Создаем интент
+        Intent intent = new Intent(this, DiedActivity.class);
+        this.startActivity(intent); // запускаем его
+    }
 }
