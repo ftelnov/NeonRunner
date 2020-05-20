@@ -27,6 +27,16 @@ public class Hero extends GameObject {
         this.max_falling_height = max_falling_height;
     }
 
+    @Override
+    public void setAbs_y(Integer abs_y) {
+        max_falling_height += getAbs_y() - abs_y;
+        if (max_falling_height <= 0) {
+            heroHandler.died();
+        }
+        super.setAbs_y(abs_y);
+
+    }
+
     private Integer max_falling_height = 0;
     private Integer ABS_MOVING_SPEED = 20; // Скорость передвижения персонажа
     private Integer RUN_RIGHT = 1; // Константа бега вправо
@@ -58,6 +68,7 @@ public class Hero extends GameObject {
     // Метод прыжка - проверяет, не в прыжке ли персонаж, затем добавляет дополнительную высоту прыжка
     public void jump() {
         if (jumpHeight <= 0 && onEarth) {
+            // Если под нами прыжковый блок, то увеличиваем амплитуду прыжка
             if (underblock != null && underblock.getClass() == JumpBlock.class) {
                 jumpHeight = JumpBlock.jumpHeightBoost;
                 jumpSpeed = JumpBlock.jumpSpeedBoost;

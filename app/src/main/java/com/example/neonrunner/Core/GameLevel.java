@@ -33,6 +33,15 @@ public class GameLevel {
 
     private ArrayList<ArrayList<GameObject>> level = new ArrayList<>(); // сам уровень
 
+    public void regenerate() {
+        for (ArrayList<GameObject> level_line : level) {
+            for (GameObject object : level_line) {
+                object.regenerate();
+            }
+        }
+        camera.syncWithAim();
+    }
+
     public GameLevel(ArrayList<String> raw_level, NeonActivity activity) {
         int level_index = 0;
         this.activity = activity; // получаем и устанавливаем активность
@@ -96,6 +105,7 @@ public class GameLevel {
         main_hero.finishBlocks = finishes;
         main_hero.nTransparents = nTransparents;
         main_hero.jumpBlocks = jumpBlocks;
+        main_hero.setMax_falling_height(levels_from_hero_counter * BLOCK_HEIGHT);
     }
 
     // отрисовываем на полотне уровень

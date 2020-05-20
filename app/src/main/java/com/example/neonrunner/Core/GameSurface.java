@@ -37,6 +37,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         level.main_hero.setHeroHandler(this); // устанавливаем для героя это полотно как основное
     }
 
+    @Override
+    public void died() {
+        // Если персонаж умер, пересоздаем игру
+        gameThread.setRunning(false);
+        gameThread.interrupt();
+        context.runFinnishScreen(); // вызываем финальный экран
+    }
+
     private GameLevel level; // текущий лвл игры
     private GameThread gameThread; // поток, контролирующий поведение полотна
     private Integer currentLevelIndex = 0; // текущий индекс уровня

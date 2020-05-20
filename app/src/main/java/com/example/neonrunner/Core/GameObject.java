@@ -11,6 +11,12 @@ public class GameObject {
         this.image = image;
     }
 
+    // функция отбрасывания на начальное положение
+    public void regenerate() {
+        this.abs_x = start_pos_x;
+        this.abs_y = start_pos_y;
+    }
+
     private Bitmap image; // текущее изображение объекта
     Integer fallingSpeed = 20; // скорость падения, использующаяся в движущихся блоках
 
@@ -36,6 +42,8 @@ public class GameObject {
 
     private final int width;
     private final int height;
+    private int start_pos_x;
+    private int start_pos_y;
 
     Integer getAbs_x() {
         return abs_x;
@@ -65,6 +73,8 @@ public class GameObject {
         this.height = height;
         abs_x = colCount * width;
         abs_y = rowCount * height;
+        start_pos_x = abs_x;
+        start_pos_y = abs_y;
     }
 
     // отрисовываем на полотне элемент
