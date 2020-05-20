@@ -9,8 +9,8 @@ This is an almost ordinary indi-game with lvl-generation
  - `.` - empty space(where hero can travel)
  - `H` - position, where hero staing
  - `X` - end-level position
- - '|' - levels separation(should be in the end of file)
- - 'J' - high-jump block(speeds up and larges the height of your jump)
+ - `|` - levels separation(should be in the end of file)
+ - `J` - high-jump block(speeds up and larges the height of your jump)
 
 When you've **already** wrote your lvl, paste it to pastebin(in non-private mode)
 
