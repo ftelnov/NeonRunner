@@ -44,7 +44,8 @@ public class Hero extends GameObject {
             } else {
                 setImage(staying_forms_left.get(0));
             }
-        } else {
+        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            Log.e("fuck", "fuck");
             if (ev_x > getAbs_x()) {
                 running_phase = RUN_RIGHT;
             } else {
@@ -82,7 +83,7 @@ public class Hero extends GameObject {
         running_right_forms.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.hero_go_right_2), width, height, false));
     }
 
-    // Уровень, который его контролирует
+    // Уровень, который его содержит
     private GameLevel gameLevel;
 
     public Hero(Bitmap image, int rowCount, int colCount, int x, int y) {
