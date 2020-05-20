@@ -35,6 +35,8 @@ public class GameLevel {
         this.activity = activity;
         Bitmap block = BitmapFactory.decodeResource(activity.getResources(), R.drawable.block_main);
         Bitmap hero = BitmapFactory.decodeResource(activity.getResources(), R.drawable.hero_stays_right);
+        Bitmap finish = BitmapFactory.decodeResource(activity.getResources(), R.drawable.finish_icon);
+        ArrayList<FinishBlock> finishes = new ArrayList<>();
         display_height = activity.getResources().getDisplayMetrics().heightPixels;
         display_width = activity.getResources().getDisplayMetrics().widthPixels;
         for (String line : raw_level) {
@@ -42,20 +44,32 @@ public class GameLevel {
             ArrayList<GameObject> temp_objects = new ArrayList<>();
 
             for (int i = 0; i < line.length(); ++i) {
-                if (arr[i] == '#') {
-                    temp_objects.add(new GameObject(block, level_index, i, 100, 100));
-                } else if (arr[i] == 'H') {
-                    Hero _hero = new Hero(hero, level_index, i, 100, 100);
-                    _hero.setGameLevel(this);
-                    camera = new BoundedCamera(_hero, this);
-                    main_hero = _hero;
-                    temp_objects.add(_hero);
+                switch (arr[i]) {
+                    case '#': {
+                        temp_objects.add(new GameObject(block, level_index, i, 100, 100));
+                        break;
+                    }
+                    case 'H': {
+                        Hero _hero = new Hero(hero, level_index, i, 100, 100);
+                        _hero.setGameLevel(this);
+                        camera = new BoundedCamera(_hero, this);
+                        main_hero = _hero;
+                        temp_objects.add(_hero);
+                        break;
+                    }
+                    case 'X': {
+                        FinishBlock finishBlock = new FinishBlock(finish, level_index, i, 100, 100);
+                        finishes.add(finishBlock);
+                        temp_objects.add(finishBlock);
+                        break;
+                    }
                 }
             }
             level.add(temp_objects);
             level_index++;
         }
         camera.syncWithAim();
+        main_hero.finishBlocks = finishes;
     }
 
     public void draw(Canvas canvas) {

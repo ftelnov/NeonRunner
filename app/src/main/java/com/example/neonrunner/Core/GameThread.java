@@ -20,7 +20,7 @@ public class GameThread extends Thread {
         while (running) {
             gameSurface.update(); // обновляем экран отрисовки
             try {
-                sleep(2); // каждые 2 мс
+                sleep(1); // каждые 2 мс
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

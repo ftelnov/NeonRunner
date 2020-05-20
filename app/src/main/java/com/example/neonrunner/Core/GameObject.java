@@ -15,10 +15,11 @@ public class GameObject {
     }
 
     private Bitmap image;
-    Integer fallingSpeed = 30;
+    Integer fallingSpeed = 20;
 
     private final int rowCount;
     private final int colCount;
+    Boolean transparent = false;
 
     public Rect getRect() {
         rect = new Rect(abs_x, abs_y, abs_x + width, abs_y + height);
