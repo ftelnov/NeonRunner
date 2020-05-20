@@ -5,33 +5,23 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+// главный класс игры, от него наследуются все другие объекты. Умеет отрисовываться на полотне и обновляться
 public class GameObject {
-    public Bitmap getImage() {
-        return image;
-    }
-
     public void setImage(Bitmap image) {
         this.image = image;
     }
 
-    private Bitmap image;
-    Integer fallingSpeed = 20;
+    private Bitmap image; // текущее изображение объекта
+    Integer fallingSpeed = 20; // скорость падения, использующаяся в движущихся блоках
 
-    private final int rowCount;
-    private final int colCount;
-    Boolean transparent = false;
+    Boolean transparent = false; // прозрачен ли блок?
 
+    // получаем прямоугольник, ограничивающий персонажа
     public Rect getRect() {
-        rect = new Rect(abs_x, abs_y, abs_x + width, abs_y + height);
-        return rect;
+        return new Rect(abs_x, abs_y, abs_x + width, abs_y + height);
     }
 
-    public void setRect(Rect rect) {
-        this.rect = rect;
-    }
-
-    private Rect rect;
-
+    // Проверяем пересечение по прямоугольникам
     boolean checkIntersection(GameObject object) {
         return this.getRect().intersect(object.getRect());
     }
@@ -63,20 +53,21 @@ public class GameObject {
         this.abs_y = abs_y;
     }
 
+    // абсолютное положение элемента на экране
     private Integer abs_x;
     private Integer abs_y;
 
+
+    // инициализируем, передав в параметры положение в столбцах/строке, ширину/высоту предполагаемого элемента
     public GameObject(Bitmap image, int rowCount, int colCount, int width, int height) {
-        this.image = Bitmap.createScaledBitmap(image, width, height, false);
-        this.rowCount = rowCount;
-        this.colCount = colCount;
+        this.image = Bitmap.createScaledBitmap(image, width, height, false); // Скалируем изображение под текущие параметры
         this.width = width;
         this.height = height;
         abs_x = colCount * width;
         abs_y = rowCount * height;
     }
 
-
+    // отрисовываем на полотне элемент
     public void draw(Canvas canvas) {
         canvas.drawBitmap(image, abs_x, abs_y, null);
     }
@@ -85,6 +76,7 @@ public class GameObject {
 
     }
 
+    // передвигаемся по полотну через смещения
     public void move(int offset_x, int offset_y) {
         this.abs_x += offset_x;
         this.abs_y += offset_y;

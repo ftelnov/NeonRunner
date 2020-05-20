@@ -49,15 +49,17 @@ public class Hero extends GameObject {
         }
     }
 
+    // Обрабатываем все касание экрана от юзера
     public void touchAppears(MotionEvent event) {
-        Float ev_x = event.getX();
+        Float ev_x = event.getX(); // получаем абсолютную позицию касания
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            running_phase = 0;
+            running_phase = 0; // если кнопку отпустили, выключаем бег
             if (ev_x > getAbs_x()) {
-                setImage(staying_forms_right.get(0));
+                setImage(staying_forms_right.get(0)); // И поворачиваемся либо левой стороной, либо правой
             } else {
                 setImage(staying_forms_left.get(0));
             }
+            // Аналогично для опускания пальца на экран
         } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (ev_x > getAbs_x()) {
                 running_phase = RUN_RIGHT;
@@ -65,6 +67,7 @@ public class Hero extends GameObject {
                 running_phase = RUN_LEFT;
             }
         }
+        // Если появился второй указатель(палец), прыгаем
         if (event.getPointerCount() != 1) {
             jump();
         }
@@ -106,25 +109,29 @@ public class Hero extends GameObject {
         super(image, rowCount, colCount, image.getWidth(), y); // Создаем как обычный игровой объект, но без скалирования по ширине, чтобы не сжимать
     }
 
-    Boolean checkIntersectionWithUntranparents() {
+    // проверяем, касаемся ли мы какого-то непрозрачного блока
+    private Boolean checkIntersectionWithUntranparents() {
+        // перебираем все непрозрачные блоки
         for (GameObject object : nTransparents) {
-            if (checkIntersection(object)) return Boolean.TRUE;
+            if (checkIntersection(object)) return Boolean.TRUE; // Возвращаем истину, если касаемся
         }
-        return Boolean.FALSE;
+        return Boolean.FALSE; // в противном случае - ложь
     }
 
+    // основной метод обновления персонажа
     @Override
     public void update() {
         super.update();
+         // проверяем на финиширование персонажем уровня
         for (FinishBlock finishBlock : finishBlocks) {
             if (finishBlock.checkIntersection(this)) {
                 heroHandler.lastLevelFinished();
             }
         }
-        onEarth = false;
-        this.setAbs_y(getAbs_y() + fallingSpeed);
+        onEarth = false; // устанавливаем, что он не на земле(для будущей проверки)
+        this.setAbs_y(getAbs_y() + fallingSpeed); // искусственно увеличиваем его координату по y на величину скорости падения
         if (checkIntersectionWithUntranparents()) {
-            onEarth = true;
+            onEarth = true; // если пересеклись с непрозрачными блоками, возвращаемся на предидущую позицию
             this.setAbs_y(getAbs_y() - fallingSpeed);
         }
         if (running_phase.equals(RUN_RIGHT)) {
@@ -151,9 +158,12 @@ public class Hero extends GameObject {
                 setAbs_x(getAbs_x() + ABS_MOVING_SPEED);
             }
         }
+        // Если высота полета еще не закончилась(еще в полете)
         if (jumpHeight > 0) {
+            // отрезаем от высоты по размеру скорости полета
             jumpHeight -= ABS_JUMP_SPEED;
             this.setAbs_y(getAbs_y() - ABS_JUMP_SPEED);
+             // Аналогично проводим проверку на пересечение с верхними блоками
             if (checkIntersectionWithUntranparents()) {
                 this.setAbs_y(getAbs_y() + ABS_JUMP_SPEED);
                 jumpHeight = 0;

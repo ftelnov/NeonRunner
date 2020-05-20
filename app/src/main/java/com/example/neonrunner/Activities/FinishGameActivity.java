@@ -21,7 +21,7 @@ public class FinishGameActivity extends NeonActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishAffinity();
+                finishAffinity(); // Выходим из приложение
             }
         });
         Button toStart = findViewById(R.id.toTheStart);
@@ -29,6 +29,7 @@ public class FinishGameActivity extends NeonActivity {
         toStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Возвращаемся на старт
                 Intent intent = new Intent(activity, MainActivity.class);
                 startActivity(intent);
             }

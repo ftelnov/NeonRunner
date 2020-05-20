@@ -6,9 +6,10 @@ This is an almost ordinary indi-game with lvl-generation
 ---
 #### Level generation
  - `#` - block(non-custom)
- - ` `(space) - empty space(where hero can travel)
+ - `.` - empty space(where hero can travel)
  - `H` - position, where hero staing
  - `X` - end-level position
+ - '|' - levels separation(should be in the end of file)
 
 When you've **already** wrote your lvl, paste it to pastebin(in non-private mode)
 

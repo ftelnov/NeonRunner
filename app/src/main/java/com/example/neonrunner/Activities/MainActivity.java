@@ -17,6 +17,6 @@ public class MainActivity extends NeonActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.newInstance(), "main").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.newInstance(), "main").commit(); // грузим фрагмент, где прописна основная логика
     }
 }

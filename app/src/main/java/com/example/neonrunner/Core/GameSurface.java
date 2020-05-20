@@ -20,41 +20,43 @@ import com.example.neonrunner.R;
 
 import java.util.ArrayList;
 
+// Основной экран игры, отрисовывается через поток
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, HeroHandler {
+    // Вызывается, когда герой закончил последний выданный уровень
     public void lastLevelFinished() {
-        currentLevelIndex += 1;
+        currentLevelIndex += 1; // Инкрементируем счетчик уровней
+        // Если перевалил за максимальное количество уровней в игре, то завершаем активность
         if (currentLevelIndex >= gameLevels.size()) {
-            try {
-                gameThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            gameThread.setRunning(false);
+            gameThread.interrupt();
+            context.runFinnishScreen(); // вызываем финальный экран
             return;
         }
-        context.runFinnishScreen();
-        level = gameLevels.get(currentLevelIndex);
-        level.main_hero.setHeroHandler(this);
+        level = gameLevels.get(currentLevelIndex); // получаем уровень
+        level.main_hero.setHeroHandler(this); // устанавливаем для героя это полотно как основное
     }
 
-    private GameLevel level;
-    private GameThread gameThread;
-    private Integer currentLevelIndex = 0;
-    private GameActivity context;
-    private ArrayList<GameLevel> gameLevels;
+    private GameLevel level; // текущий лвл игры
+    private GameThread gameThread; // поток, контролирующий поведение полотна
+    private Integer currentLevelIndex = 0; // текущий индекс уровня
+    private GameActivity context; // контекст, в котором полотно было вызвано
+    private ArrayList<GameLevel> gameLevels; // уровни игры
 
+    // конструктор полотно, принимает контекст и уровни игры
     public GameSurface(GameActivity context, ArrayList<GameLevel> levels) {
         super(context);
         level = levels.get(0); // устанавливаем уровень игры
-        level.main_hero.setHeroHandler(this);
-        gameLevels = levels;
-        this.context = context;
+        level.main_hero.setHeroHandler(this); // устанавливаем как хэндлер
+        gameLevels = levels; // устанавливаем уровни
+        this.context = context; // контекст
         this.setFocusable(true); // для того, чтобы проходили клики по области
         this.getHolder().addCallback(this); // подключаем holder
     }
 
+    // вызывается, когда происходит любое движение пальцем по экрану
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        level.main_hero.touchAppears(event);
+        level.main_hero.touchAppears(event); // передает герою информацию о пальце на экране
         return true;
     }
 
@@ -66,7 +68,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         getHolder().unlockCanvasAndPost(canvas);
     }
 
-
+    // Главный метод отрисовки, делегирует задачу по отрисовке уровню
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -77,8 +79,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         setWillNotDraw(false);
-        this.gameThread = new GameThread(this);
-        this.gameThread.setRunning(true);
+        this.gameThread = new GameThread(this); // подключаем поток
+        this.gameThread.setRunning(true); // запускаем
         this.gameThread.start();
     }
 
@@ -90,18 +92,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = true;
-        while (retry) {
-            try {
-                this.gameThread.setRunning(false);
-
-                // Parent thread must wait until the end of GameThread.
-                this.gameThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            retry = true;
-        }
     }
 
 }
