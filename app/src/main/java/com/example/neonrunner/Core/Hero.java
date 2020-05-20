@@ -17,7 +17,7 @@ public class Hero extends GameObject {
     private Integer ABS_JUMP_HEIGHT = 300; // Максимальная высота прыжка персонажа
     private Integer ABS_JUMP_SPEED = 60;
     private Boolean onEarth = true;
-    private Integer ABS_MOVING_SPEED = 10; // Скорость передвижения персонажа
+    private Integer ABS_MOVING_SPEED = 20; // Скорость передвижения персонажа
     private Integer RUN_RIGHT = 1; // Константа бега вправо
     private Integer RUN_LEFT = -1; // Константа бега влево
     private Integer running_phase = 0; // Фаза бега

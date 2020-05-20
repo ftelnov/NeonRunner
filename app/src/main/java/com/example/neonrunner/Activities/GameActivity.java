@@ -2,6 +2,7 @@ package com.example.neonrunner.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,5 +47,10 @@ public class GameActivity extends NeonActivity {
         GameSurface surface = new GameSurface(this, gameLevels);
         surface.setBackgroundResource(R.drawable.purple_sunset);
         this.setContentView(surface);
+    }
+
+    public void runFinnishScreen() {
+        Intent intent = new Intent(this, FinishGameActivity.class);
+        this.startActivity(intent);
     }
 }

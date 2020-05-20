@@ -1,6 +1,7 @@
 package com.example.neonrunner.Core;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,6 +13,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.neonrunner.Activities.FinishGameActivity;
+import com.example.neonrunner.Activities.GameActivity;
+import com.example.neonrunner.Activities.NeonActivity;
 import com.example.neonrunner.R;
 
 import java.util.ArrayList;
@@ -19,6 +23,15 @@ import java.util.ArrayList;
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, HeroHandler {
     public void lastLevelFinished() {
         currentLevelIndex += 1;
+        if (currentLevelIndex >= gameLevels.size()) {
+            try {
+                gameThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+        context.runFinnishScreen();
         level = gameLevels.get(currentLevelIndex);
         level.main_hero.setHeroHandler(this);
     }
@@ -26,13 +39,15 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private GameLevel level;
     private GameThread gameThread;
     private Integer currentLevelIndex = 0;
+    private GameActivity context;
     private ArrayList<GameLevel> gameLevels;
 
-    public GameSurface(Context context, ArrayList<GameLevel> levels) {
+    public GameSurface(GameActivity context, ArrayList<GameLevel> levels) {
         super(context);
         level = levels.get(0); // устанавливаем уровень игры
         level.main_hero.setHeroHandler(this);
         gameLevels = levels;
+        this.context = context;
         this.setFocusable(true); // для того, чтобы проходили клики по области
         this.getHolder().addCallback(this); // подключаем holder
     }

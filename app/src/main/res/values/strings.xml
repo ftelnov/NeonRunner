@@ -4,4 +4,6 @@
     <string name="level_hint">Paste id</string>
     <string name="connection_unstable">Подключение нестабильно</string>
     <string name="start_original_game">Начать оригинальную игру</string>
+    <string name="go_to_the_start">Вернуться в меню</string>
+    <string name="logout">Выйти</string>
 </resources>
