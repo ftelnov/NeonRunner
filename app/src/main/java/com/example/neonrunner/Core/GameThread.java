@@ -8,30 +8,26 @@ import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
 
-    private boolean running;
-    private GameSurface gameSurface;
-    private SurfaceHolder surfaceHolder;
+    private boolean running; // Поток запущен?
+    private GameSurface gameSurface; // Главный экран игры
 
-    public GameThread(GameSurface gameSurface, SurfaceHolder surfaceHolder) {
+    public GameThread(GameSurface gameSurface) {
         this.gameSurface = gameSurface;
-        this.surfaceHolder = surfaceHolder;
     }
 
     @Override
     public void run() {
-        long startTime = System.nanoTime();
-
         while (running) {
-            gameSurface.update();
+            gameSurface.update(); // обновляем экран отрисовки
             try {
-                sleep(2);
+                sleep(2); // каждые 2 мс
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void setRunning(boolean running) {
+    void setRunning(boolean running) {
         this.running = running;
     }
 }

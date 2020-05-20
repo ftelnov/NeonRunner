@@ -3,27 +3,42 @@ package com.example.neonrunner.Core;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
 public class GameObject {
-    protected Bitmap image;
+    private Bitmap image;
+    Integer fallingSpeed = 10;
 
-    protected final int rowCount;
-    protected final int colCount;
-    int marginLeft = 500;
-    int marginTop = 500;
+    private final int rowCount;
+    private final int colCount;
 
-    protected final int width;
-    protected final int height;
+    public Rect getRect() {
+        rect = new Rect(abs_x, abs_y, abs_x + width, abs_y + height);
+        return rect;
+    }
 
-    public Integer getAbs_x() {
+    public void setRect(Rect rect) {
+        this.rect = rect;
+    }
+
+    private Rect rect;
+
+    boolean checkIntersection(GameObject object) {
+        return this.getRect().intersect(object.getRect());
+    }
+
+    private final int width;
+    private final int height;
+
+    Integer getAbs_x() {
         return abs_x;
     }
 
-    public void setAbs_x(Integer abs_x) {
+    void setAbs_x(Integer abs_x) {
         this.abs_x = abs_x;
     }
 
-    public Integer getAbs_y() {
+    Integer getAbs_y() {
         return abs_y;
     }
 
@@ -34,42 +49,16 @@ public class GameObject {
     private Integer abs_x;
     private Integer abs_y;
 
-    public int getPos_x() {
-        return pos_x;
-    }
-
-    public void setPos_x(int pos_x) {
-        this.pos_x = pos_x;
-    }
-
-    public int getPos_y() {
-        return pos_y;
-    }
-
-    public void setPos_y(int pos_y) {
-        this.pos_y = pos_y;
-    }
-
-    private int pos_x;
-    private int pos_y;
-
     public GameObject(Bitmap image, int rowCount, int colCount, int width, int height) {
-
         this.image = Bitmap.createScaledBitmap(image, width, height, false);
         this.rowCount = rowCount;
         this.colCount = colCount;
         this.width = width;
         this.height = height;
-        pos_y = rowCount * height;
-        pos_x = colCount * width;
-        abs_x = pos_x + this.marginLeft;
-        abs_y = pos_y + this.marginTop;
+        abs_x = colCount * width;
+        abs_y = rowCount * height;
     }
 
-    protected Bitmap createSubImageAt(int row, int col) {
-        Bitmap subImage = Bitmap.createBitmap(image, this.marginLeft + col * width, this.marginTop + row * height, width, height);
-        return subImage;
-    }
 
     public void draw(Canvas canvas) {
         canvas.drawBitmap(image, abs_x, abs_y, null);

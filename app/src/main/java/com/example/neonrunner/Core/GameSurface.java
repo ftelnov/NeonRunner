@@ -18,16 +18,12 @@ import java.util.ArrayList;
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private GameLevel level;
     private GameThread gameThread;
-    private Hero hero;
-    private ArrayList<Block> blocks;
 
-    public GameSurface(Context context, GameLevel levelt) {
+    public GameSurface(Context context, GameLevel _level) {
         super(context);
-        level = levelt;
-        // Make Game Surface focusable so it can handle events. .
-        this.setFocusable(true);
-        // Sét callback.
-        this.getHolder().addCallback(this);
+        level = _level; // устанавливаем уровень игры
+        this.setFocusable(true); // для того, чтобы проходили клики по области
+        this.getHolder().addCallback(this); // подключаем holder
     }
 
     @Override
@@ -47,10 +43,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-        invalidate();
-        Canvas canvas = getHolder().lockCanvas(null);
-        this.draw(canvas);
-        this.level.update();
+        invalidate(); // открываем для изменения
+        Canvas canvas = getHolder().lockCanvas(null); // получаем очищенное полотно
+        this.level.update(); // обновляем уровень
+        this.draw(canvas); // отрисовываем на полотне уровень
         getHolder().unlockCanvasAndPost(canvas);
     }
 
@@ -64,7 +60,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         setWillNotDraw(false);
-        this.gameThread = new GameThread(this, holder);
+        this.gameThread = new GameThread(this);
         this.gameThread.setRunning(true);
         this.gameThread.start();
     }
