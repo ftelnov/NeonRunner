@@ -26,6 +26,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     public void lastLevelFinished() {
         currentLevelIndex += 1; // Инкрементируем счетчик уровней
         // Если перевалил за максимальное количество уровней в игре, то завершаем активность
+        Log.e(currentLevelIndex.toString(), Integer.toString(gameLevels.size()));
         if (currentLevelIndex >= gameLevels.size()) {
             gameThread.setRunning(false);
             gameThread.interrupt();

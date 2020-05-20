@@ -13,10 +13,21 @@ import com.example.neonrunner.R;
 import java.util.ArrayList;
 
 public class Hero extends GameObject {
-    private Integer jumpHeight = 0; // Оставшаяся высота прыжка
+    private Integer jumpHeight = 300; // Оставшаяся высота прыжка
+    private Integer jumpSpeed = 60;
     private Integer ABS_JUMP_HEIGHT = 300; // Максимальная высота прыжка персонажа
     private Integer ABS_JUMP_SPEED = 60;
     private Boolean onEarth = true;
+
+    public Integer getMax_falling_height() {
+        return max_falling_height;
+    }
+
+    public void setMax_falling_height(Integer max_falling_height) {
+        this.max_falling_height = max_falling_height;
+    }
+
+    private Integer max_falling_height = 0;
     private Integer ABS_MOVING_SPEED = 20; // Скорость передвижения персонажа
     private Integer RUN_RIGHT = 1; // Константа бега вправо
     private Integer RUN_LEFT = -1; // Константа бега влево
@@ -28,6 +39,8 @@ public class Hero extends GameObject {
     private ArrayList<Bitmap> running_left_forms = new ArrayList<>();
     ArrayList<GameObject> nTransparents; // Массив непрозрачных блоков
     ArrayList<FinishBlock> finishBlocks; // Массив финальных блоков(на след. уровень)
+    ArrayList<JumpBlock> jumpBlocks; // блоки на которых можно прыгать лучше
+    GameObject underblock;
 
     public HeroHandler getHeroHandler() {
         return heroHandler;
@@ -45,7 +58,13 @@ public class Hero extends GameObject {
     // Метод прыжка - проверяет, не в прыжке ли персонаж, затем добавляет дополнительную высоту прыжка
     public void jump() {
         if (jumpHeight <= 0 && onEarth) {
-            jumpHeight = ABS_JUMP_HEIGHT;
+            if (underblock != null && underblock.getClass() == JumpBlock.class) {
+                jumpHeight = JumpBlock.jumpHeightBoost;
+                jumpSpeed = JumpBlock.jumpSpeedBoost;
+            } else {
+                jumpHeight = ABS_JUMP_HEIGHT;
+                jumpSpeed = ABS_JUMP_SPEED;
+            }
         }
     }
 
@@ -122,7 +141,7 @@ public class Hero extends GameObject {
     @Override
     public void update() {
         super.update();
-         // проверяем на финиширование персонажем уровня
+        // проверяем на финиширование персонажем уровня
         for (FinishBlock finishBlock : finishBlocks) {
             if (finishBlock.checkIntersection(this)) {
                 heroHandler.lastLevelFinished();
@@ -130,9 +149,15 @@ public class Hero extends GameObject {
         }
         onEarth = false; // устанавливаем, что он не на земле(для будущей проверки)
         this.setAbs_y(getAbs_y() + fallingSpeed); // искусственно увеличиваем его координату по y на величину скорости падения
-        if (checkIntersectionWithUntranparents()) {
-            onEarth = true; // если пересеклись с непрозрачными блоками, возвращаемся на предидущую позицию
-            this.setAbs_y(getAbs_y() - fallingSpeed);
+        for (GameObject object : nTransparents) {
+            if (checkIntersection(object)) {
+                onEarth = true; // если пересеклись с непрозрачными блоками, возвращаемся на предидущую позицию
+                underblock = object; // Устанавливаем нижним блоком пересекающийся с нами
+                this.setAbs_y(getAbs_y() - fallingSpeed);
+            }
+        }
+        if (!onEarth) {
+            underblock = null;
         }
         if (running_phase.equals(RUN_RIGHT)) {
             // Последовательная смена форм из массива
@@ -161,11 +186,11 @@ public class Hero extends GameObject {
         // Если высота полета еще не закончилась(еще в полете)
         if (jumpHeight > 0) {
             // отрезаем от высоты по размеру скорости полета
-            jumpHeight -= ABS_JUMP_SPEED;
-            this.setAbs_y(getAbs_y() - ABS_JUMP_SPEED);
-             // Аналогично проводим проверку на пересечение с верхними блоками
+            jumpHeight -= jumpSpeed;
+            this.setAbs_y(getAbs_y() - jumpSpeed);
+            // Аналогично проводим проверку на пересечение с верхними блоками
             if (checkIntersectionWithUntranparents()) {
-                this.setAbs_y(getAbs_y() + ABS_JUMP_SPEED);
+                this.setAbs_y(getAbs_y() + jumpSpeed);
                 jumpHeight = 0;
             }
         }
