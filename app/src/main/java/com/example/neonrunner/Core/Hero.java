@@ -26,6 +26,7 @@ public class Hero extends GameObject {
     private ArrayList<Bitmap> staying_forms_right = new ArrayList<>();
     private ArrayList<Bitmap> running_right_forms = new ArrayList<>();
     private ArrayList<Bitmap> running_left_forms = new ArrayList<>();
+    ArrayList<GameObject> nTransparents;
     ArrayList<FinishBlock> finishBlocks;
     // Переменные смены формы(инкрементируются, а затем сбрасываются, если дошло до конца массива форм
     private Integer form_left_switcher = 0;
@@ -100,17 +101,14 @@ public class Hero extends GameObject {
         super.update();
         for (FinishBlock finishBlock : finishBlocks) {
             if (finishBlock.checkIntersection(this)) {
-                Log.e("finished", "true");
             }
         }
         onEarth = false;
         this.setAbs_y(getAbs_y() + fallingSpeed);
-        for (ArrayList<GameObject> list : gameLevel.getLevel()) {
-            for (GameObject object : list) {
-                if (object != this && checkIntersection(object) && !object.transparent) {
-                    onEarth = true;
-                    this.setAbs_y(getAbs_y() - fallingSpeed);
-                }
+        for (GameObject object : nTransparents) {
+            if (checkIntersection(object)) {
+                onEarth = true;
+                this.setAbs_y(getAbs_y() - fallingSpeed);
             }
         }
         if (running_phase.equals(RUN_RIGHT)) {
@@ -121,12 +119,10 @@ public class Hero extends GameObject {
                 form_right_switcher = 0; // обнуляем, если перешло границу массива
             }
             setAbs_x(getAbs_x() + ABS_MOVING_SPEED); // Прибавляем координату
-            for (ArrayList<GameObject> list : gameLevel.getLevel()) {
-                for (GameObject object : list) {
-                    // Перебираем массив объектов, если находим пересечение - удаляем изменения путем откатывания
-                    if (object != this && checkIntersection(object) && !object.transparent) {
-                        setAbs_x(getAbs_x() - ABS_MOVING_SPEED);
-                    }
+            for (GameObject object : nTransparents) {
+                // Перебираем массив объектов, если находим пересечение - удаляем изменения путем откатывания
+                if (checkIntersection(object)) {
+                    setAbs_x(getAbs_x() - ABS_MOVING_SPEED);
                 }
             }
         } else if (running_phase.equals(RUN_LEFT)) { // Аналогично и с хождением влево
@@ -137,22 +133,18 @@ public class Hero extends GameObject {
                 form_left_switcher = 0; // обнуляем, если перешло границу массива
             }
             setAbs_x(getAbs_x() - ABS_MOVING_SPEED);
-            for (ArrayList<GameObject> list : gameLevel.getLevel()) {
-                for (GameObject object : list) {
-                    if (object != this && checkIntersection(object)) {
-                        setAbs_x(getAbs_x() + ABS_MOVING_SPEED);
-                    }
+            for (GameObject object : nTransparents) {
+                if (checkIntersection(object)) {
+                    setAbs_x(getAbs_x() + ABS_MOVING_SPEED);
                 }
             }
         }
         if (jumpHeight > 0) {
             jumpHeight -= ABS_JUMP_SPEED;
             this.setAbs_y(getAbs_y() - ABS_JUMP_SPEED);
-            for (ArrayList<GameObject> list : gameLevel.getLevel()) {
-                for (GameObject object : list) {
-                    if (object != this && checkIntersection(object) && !object.transparent) {
-                        this.setAbs_y(getAbs_y() + ABS_JUMP_SPEED);
-                    }
+            for (GameObject object : nTransparents) {
+                if (checkIntersection(object)) {
+                    this.setAbs_y(getAbs_y() + ABS_JUMP_SPEED);
                 }
             }
         }

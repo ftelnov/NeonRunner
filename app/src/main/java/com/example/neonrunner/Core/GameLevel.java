@@ -37,6 +37,7 @@ public class GameLevel {
         Bitmap hero = BitmapFactory.decodeResource(activity.getResources(), R.drawable.hero_stays_right);
         Bitmap finish = BitmapFactory.decodeResource(activity.getResources(), R.drawable.finish_icon);
         ArrayList<FinishBlock> finishes = new ArrayList<>();
+        ArrayList<GameObject> nTransparents = new ArrayList<>();
         display_height = activity.getResources().getDisplayMetrics().heightPixels;
         display_width = activity.getResources().getDisplayMetrics().widthPixels;
         for (String line : raw_level) {
@@ -46,7 +47,9 @@ public class GameLevel {
             for (int i = 0; i < line.length(); ++i) {
                 switch (arr[i]) {
                     case '#': {
-                        temp_objects.add(new GameObject(block, level_index, i, 100, 100));
+                        GameObject object = new GameObject(block, level_index, i, 100, 100);
+                        temp_objects.add(object);
+                        nTransparents.add(object);
                         break;
                     }
                     case 'H': {
@@ -70,6 +73,7 @@ public class GameLevel {
         }
         camera.syncWithAim();
         main_hero.finishBlocks = finishes;
+        main_hero.nTransparents = nTransparents;
     }
 
     public void draw(Canvas canvas) {
