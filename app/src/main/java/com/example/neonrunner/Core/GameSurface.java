@@ -16,13 +16,23 @@ import com.example.neonrunner.R;
 
 import java.util.ArrayList;
 
-public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
+public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, HeroHandler {
+    public void lastLevelFinished() {
+        currentLevelIndex += 1;
+        level = gameLevels.get(currentLevelIndex);
+        level.main_hero.setHeroHandler(this);
+    }
+
     private GameLevel level;
     private GameThread gameThread;
+    private Integer currentLevelIndex = 0;
+    private ArrayList<GameLevel> gameLevels;
 
-    public GameSurface(Context context, GameLevel _level) {
+    public GameSurface(Context context, ArrayList<GameLevel> levels) {
         super(context);
-        level = _level; // устанавливаем уровень игры
+        level = levels.get(0); // устанавливаем уровень игры
+        level.main_hero.setHeroHandler(this);
+        gameLevels = levels;
         this.setFocusable(true); // для того, чтобы проходили клики по области
         this.getHolder().addCallback(this); // подключаем holder
     }
@@ -40,6 +50,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         this.draw(canvas); // отрисовываем на полотне уровень
         getHolder().unlockCanvasAndPost(canvas);
     }
+
 
     @Override
     public void draw(Canvas canvas) {

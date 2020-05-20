@@ -26,8 +26,18 @@ public class Hero extends GameObject {
     private ArrayList<Bitmap> staying_forms_right = new ArrayList<>();
     private ArrayList<Bitmap> running_right_forms = new ArrayList<>();
     private ArrayList<Bitmap> running_left_forms = new ArrayList<>();
-    ArrayList<GameObject> nTransparents;
-    ArrayList<FinishBlock> finishBlocks;
+    ArrayList<GameObject> nTransparents; // Массив непрозрачных блоков
+    ArrayList<FinishBlock> finishBlocks; // Массив финальных блоков(на след. уровень)
+
+    public HeroHandler getHeroHandler() {
+        return heroHandler;
+    }
+
+    public void setHeroHandler(HeroHandler heroHandler) {
+        this.heroHandler = heroHandler;
+    }
+
+    HeroHandler heroHandler;
     // Переменные смены формы(инкрементируются, а затем сбрасываются, если дошло до конца массива форм
     private Integer form_left_switcher = 0;
     private Integer form_right_switcher = 0;
@@ -108,6 +118,7 @@ public class Hero extends GameObject {
         super.update();
         for (FinishBlock finishBlock : finishBlocks) {
             if (finishBlock.checkIntersection(this)) {
+                heroHandler.lastLevelFinished();
             }
         }
         onEarth = false;
