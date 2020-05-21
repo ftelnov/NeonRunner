@@ -24,6 +24,9 @@ H........X
 |
 ```
 
+Paste example: `https://pastebin.com/5fnUb9gn`
+What you should copy from this paste: `5fnUb9gn`
+
 ---
 #### Thanks you :)
 Author's Links:
